@@ -1,9 +1,14 @@
-import { View, Text } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import { useEntitlement } from '@/providers/EntitlementProvider'
 import { LockedScreen } from '@/components/LockedScreen'
+import { PlanWizard } from '@/components/training/PlanWizard'
+import { PlanViewer } from '@/components/training/PlanViewer'
+import { useTrainingPlan } from '@/hooks/useTrainingPlan'
+import { colors } from '@/theme/colors'
 
 export default function Training() {
   const { isActive } = useEntitlement()
+  const { plan, loading, assigning, error, assign, reset } = useTrainingPlan()
 
   if (!isActive) {
     return (
@@ -14,10 +19,28 @@ export default function Training() {
     )
   }
 
+  if (loading) {
+    return (
+      <View className="flex-1 bg-bg items-center justify-center">
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    )
+  }
+
+  if (!plan) {
+    return (
+      <PlanWizard
+        onAssign={assign}
+        assigning={assigning}
+        error={error}
+      />
+    )
+  }
+
   return (
-    <View className="flex-1 bg-bg items-center justify-center">
-      <Text className="text-text text-2xl font-bold">Training</Text>
-      <Text className="text-text-muted mt-2">Workout tracking coming soon</Text>
-    </View>
+    <PlanViewer
+      plan={plan}
+      onChangePlan={reset}
+    />
   )
 }
