@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "GymRat",
+    "slug": "gymrat",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "gymrat",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.gymrat.app"
+    },
+    "android": {
+      "package": "com.gymrat.app"
+    },
+    "plugins": [
+      "expo-router",
+      "react-native-purchases",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0a0a0a"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
